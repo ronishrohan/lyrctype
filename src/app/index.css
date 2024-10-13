@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.dark{
+  --background: #0C0C0C;
+  --background-darker: #060606;
+  --primary: #5ebe5e;
+  --primary-tint: #1a2e1a;
+  --border: #3C3C3C;
+  --warning: #BE715E;
+  --grey-surface: #4B4B4B;
+  --grey-inactive: #232323;
+}
+
+html, #root, body{
+  height: 100%;
+  background-color: var(--background);
+  color: white;
+  
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

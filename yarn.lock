@@ -39,6 +39,21 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
+"@fontsource-variable/roboto-flex@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/roboto-flex/-/roboto-flex-5.1.0.tgz#27a88f659e546922f95fb9a832612ae76bf2fb6e"
+  integrity sha512-TwH8+uOwBqIjxtvTc+kp7ywyH7V7bDLbAXrEQg2SoCTJ6m2pn00x7ULioTTzDEvek+XpbqIf8gbKE1zlcONNGg==
+
+"@fontsource/syne@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/syne/-/syne-5.1.0.tgz#3fb3d10428d48606f246bd5e5b77703c869fb61f"
+  integrity sha512-smFC8PfzhGO8In1cGP8jHW+3Fxotl75y/WIanUaohHPAmReRG8+Y3wfEomyxOnli18/03SdydEqy2gZGwKhpyA==
+
+"@fontsource/xanh-mono@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/xanh-mono/-/xanh-mono-5.1.0.tgz#d7985987b13509bbe7629aaea7bb33ba104ea709"
+  integrity sha512-m9zCUG79Ca/HGSpBwYe2JVnOyAJ0gA9RPPF2CsJwYBNcHk3+LqYKdvpAF0e+2jpoNjnsOgbBXnWkTdW9TL4paw==
+
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.13.0.tgz#fb907624df3256d04b9aa2df50d7aa97ec648748"
@@ -2313,6 +2328,7 @@ streamsearch@^1.1.0:
   integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -2393,6 +2409,7 @@ string.prototype.trimstart@^1.0.8:
     es-object-atoms "^1.0.0"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
