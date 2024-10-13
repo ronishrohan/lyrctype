@@ -4,6 +4,7 @@
 
 
 .dark{
+  --text: #FFFFFF;
   --background: #0C0C0C;
   --background-darker: #060606;
   --primary: #5ebe5e;
@@ -14,10 +15,22 @@
   --grey-inactive: #232323;
 }
 
+.light{
+  --text: #000000;
+  --background: #F7FFF0;
+  --background-darker: rgb(241, 245, 236);
+  --primary: #2C822C;
+  --primary-tint: rgb(208, 255, 208);
+  --border: #0A0A0A;
+  --warning: #BE715E;
+  --grey-surface: #F7F7F7;
+  --grey-inactive: #E0E0E0;
+}
+
 html, #root, body{
   height: 100%;
   background-color: var(--background);
-  color: white;
+  color: var(--text);
   
 }
 

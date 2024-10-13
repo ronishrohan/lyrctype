@@ -7,8 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "mono": ["Xanh Mono", "monospace"],
+        "roboto": ["Roboto Flex", "sans-serif"],
+      },
       colors: {
         background: "var(--background)",
+        background_darker: "var(--background-darker)",
         primary: "var(--primary)",
         primary_tint: "var(--primary-tint)",
         border: "var(--border)",
