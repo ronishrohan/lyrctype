@@ -1,7 +1,6 @@
 import "./index.css";
 import "@fontsource-variable/roboto-flex";
-
-
+import "@fontsource/syne";
 import "@fontsource/xanh-mono";
 
 import Navbar from "./components/Navbar/Navbar";
@@ -9,7 +8,7 @@ import Navbar from "./components/Navbar/Navbar";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="light flex flex-col">
+      <body className="dark flex flex-col">
         <Navbar />
         {children}
       </body>

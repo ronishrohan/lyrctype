@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         "mono": ["Xanh Mono", "monospace"],
         "roboto": ["Roboto Flex", "sans-serif"],
+        "syne" : ["Syne", "sans-serif"]
       },
       colors: {
         background: "var(--background)",
