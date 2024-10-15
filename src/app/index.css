@@ -10,7 +10,7 @@
   --primary: #5ebe5e;
   --primary-tint: #1a2e1a;
   --border: #3C3C3C;
-  --warning: #BE715E;
+  --warning: 190, 113, 94;
   --grey-surface: #4B4B4B;
   --grey-inactive: #232323;
 }

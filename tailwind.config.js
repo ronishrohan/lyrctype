@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionTimingFunction: {
+        circOut: "cubic-bezier(0, 0.55, 0.45, 1)"
+      },
       fontFamily: {
         "mono": ["Xanh Mono", "monospace"],
         "roboto": ["Roboto Flex", "sans-serif"],
@@ -18,7 +21,7 @@ module.exports = {
         primary: "var(--primary)",
         primary_tint: "var(--primary-tint)",
         border: "var(--border)",
-        warning: "var(--warning)",
+        warning: "rgba(var(--warning))",
         grey_surface: "var(--grey-surface)",
         grey_inactive: "var(--grey-inactive)",
 
