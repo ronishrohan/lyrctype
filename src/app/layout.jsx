@@ -1,17 +1,19 @@
+
 import "./index.css";
 
 import "@fontsource/syne";
 import "@fontsource/xanh-mono";
 
-import Navbar from "./components/Navbar/Navbar";
+
+import RootProviders from "@/providers/RootProviders";
+import ThemedBody from "./components/Root/ThemedBody";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="dark flex flex-col">
-        <Navbar />
-        {children}
-      </body>
+      <RootProviders>
+        <ThemedBody>{children}</ThemedBody>
+      </RootProviders>
     </html>
   );
 }

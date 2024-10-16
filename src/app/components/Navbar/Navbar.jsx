@@ -32,23 +32,25 @@ const SearchBar = () => {
   return (
     <>
       <div
-        className={`relative flex items-center justify-center box-border h-full w-full ${syne.className}`}
+        className={`relative flex  items-center justify-center box-border h-full w-full ${syne.className}`}
       >
-        <div className="left-0 m-4 size-6 fill-grey_inactive absolute">
-          {icons.search}
-        </div>
+        
         {!isFocused && (
           <div className="m-4 right-0 absolute font-bold text-grey_inactive">
           /CTRL+K
         </div>
         )}
+        
         <input
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
           type="text"
           placeholder="SEARCH"
-          className="box-border pl-12 placeholder:text-grey_inactive font-roboto font-bold size-full focus:border-primary bg-background_darker outline-none border-2 border-border rounded-md p-4 text0sm"
+          className="box-border peer pl-12 placeholder:text-grey_inactive font-roboto font-bold size-full focus:border-primary bg-background_darker outline-none border-2 border-border rounded-md p-4 text0sm"
         />
+        <div className="left-0 m-4  peer-focus:fill-primary  size-6 fill-grey_inactive absolute">
+          {icons.search}
+        </div>
       </div>
     </>
   );

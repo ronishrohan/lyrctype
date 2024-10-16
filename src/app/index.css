@@ -28,16 +28,21 @@
   --primary: #2C822C;
   --primary-tint: rgb(208, 255, 208);
   --border: #0A0A0A;
-  --warning: #BE715E;
-  --grey-surface: #F7F7F7;
-  --grey-inactive: #E0E0E0;
+  --warning: 190, 113, 94;
+  --grey-surface: #292929;
+  --grey-inactive: #1a1a1a;
 }
 
 html, #root, body{
   height: 100%;
   background-color: var(--background);
+  transition: background 0.15s ease-in-out;
   color: var(--text);
   
+}
+
+body *{
+  transition: background 0.15s ease-in-out;
 }
 
 @layer utilities {

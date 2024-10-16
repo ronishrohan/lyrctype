@@ -1,12 +1,19 @@
+"use client"
 import React from "react";
 import { Roboto_Flex, Syne } from "next/font/google";
 import Button from "@/app/components/Button/Button";
 import {icons} from "@/util/icons";
+import { useAtom } from "jotai";
+import { currentTheme as currentThemeAtom} from "@/store/themeStore";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
 const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] }); 
 
+
+
+
 const page = () => {
+  const [theme, setTheme] = useAtom(currentThemeAtom)
   return (
     <div className="size-full flex px-4 pb-4 gap-4">
       <section className="size-full flex flex-col gap-2">
@@ -26,9 +33,9 @@ const page = () => {
         </section>
         <section className="flex gap-2 size-full relative">
           <section className="max-h-32 flex gap-2 w-full  *:h-full *:w-full hover:*:w-[120%] *:transition-all *:ease-circOut *:duration-500">
-            <Button name={"LEADERBOARD"} icon={icons.leaderboard}></Button>
+            <Button onClick={() => {}} name={"LEADERBOARD"} icon={icons.leaderboard}></Button>
             <Button name={"SETTINGS"} icon={icons.settings}></Button>
-            <Button name={"THEME"} icon={icons.theme}></Button>
+            <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} name={"THEME"} icon={icons.theme}></Button>
             <Button name={"PROFILE"} icon={icons.profile}></Button>
             <Button name={"GITHUB"} className="md:block lg:hidden" icon={icons.github} ></Button>
           </section>

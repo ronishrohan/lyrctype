@@ -12,6 +12,8 @@
     "@fontsource-variable/roboto-flex": "^5.1.0",
     "@fontsource/syne": "^5.1.0",
     "@fontsource/xanh-mono": "^5.1.0",
+    "framer-motion": "^11.11.9",
+    "jotai": "^2.10.1",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18"
