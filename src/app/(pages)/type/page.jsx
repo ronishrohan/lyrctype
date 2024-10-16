@@ -5,6 +5,7 @@ import Button from "@/app/components/Button/Button";
 import {icons} from "@/util/icons";
 import { useAtom } from "jotai";
 import { currentTheme as currentThemeAtom} from "@/store/themeStore";
+import {motion} from "framer-motion";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
 const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] }); 
@@ -40,7 +41,7 @@ const TypePage = () => {
             <Button onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} name={"GITHUB"} className="md:block lg:hidden" icon={icons.github} ></Button>
           </section>
           {/* <div className="size-full" ></div> */}
-          <Button onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} className="relative w-1/4 shrink-0 h-full md:hidden lg:block" name={"GITHUB"} icon={icons.github} ></Button>
+          <Button  onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} className="relative w-1/4 shrink-0 h-full md:hidden lg:block" name={"GITHUB"} icon={icons.github} ></Button>
         </section>
       </section>
       <SidebarContainer />
@@ -49,7 +50,7 @@ const TypePage = () => {
 };
 
 const TogglabbleButton = ({ children }) => {
-  return <button>{children.toString()}</button>;
+  return <motion.button>{children.toString()}</motion.button>;
 };
 
 const TypingArea = () => {

@@ -3,17 +3,19 @@ import React, { useState } from "react";
 import { Syne } from "next/font/google";
 import Button from "../Button/Button";
 import { icons } from "@/util/icons";
+import Link from "next/link";
 
 const syne = Syne({ subsets: ["latin"], weight: "variable" });
 
 const Navbar = () => {
   return (
     <header className="h-[80px] sticky p-4  flex bg-background items-center">
-      <div
+      <Link
+      href={"/"}
         className={`${syne.className} text-4xl font-black text-primary shrink-0`}
       >
         LYRC
-      </div>
+      </Link>
       <div className="flex gap-2 ml-auto h-full w-96">
         <SearchBar></SearchBar>
         <Button
@@ -46,7 +48,7 @@ const SearchBar = () => {
         onBlur={() => setIsFocused(false)}
           type="text"
           placeholder="SEARCH"
-          className="box-border peer pl-12 placeholder:text-grey_inactive font-roboto font-bold size-full focus:border-primary bg-background_darker outline-none border-2 border-border rounded-md p-4 text0sm"
+          className="box-border peer pl-12 placeholder:text-grey_inactive  font-roboto placeholder:font-bold size-full focus:border-primary bg-background_darker outline-none border-2 border-border rounded-md p-4 text0sm"
         />
         <div className="left-0 m-4  peer-focus:fill-primary  size-6 fill-grey_inactive absolute">
           {icons.search}
