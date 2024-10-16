@@ -30,9 +30,9 @@ const Button = ({ onClick, size, name, title, icon, ...others }) => {
     <div {...others} title={title}>
       <button
         ref={buttonRef}
-        onMouseDown={handleOnCLick}
+        onClick={handleOnCLick}
         
-        className="relative overflow-hidden size-full group rounded-md border-2 border-border hover:border-primary bg-background hover:bg-primary_tint flex items-center justify-center"
+        className="relative cursor-default overflow-hidden size-full group rounded-md border-2 border-border hover:border-primary bg-background hover:bg-primary_tint flex items-center justify-center"
       >
         <div
           className={`${
@@ -58,8 +58,8 @@ const Button = ({ onClick, size, name, title, icon, ...others }) => {
               style={{x: mouse[0], y: mouse[1]}}
               initial={{ scale: 0, opacity: 0.5 }}
               animate={{ scale: 2, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="rounded-full z-0 absolute size-full blur-2xl bg-primary "
+              transition={{ duration: 0.5, ease: "circOut" }}
+              className="rounded-full z-0 absolute size-full aspect-square blur-2xl bg-primary "
             ></motion.div>
           );
           }

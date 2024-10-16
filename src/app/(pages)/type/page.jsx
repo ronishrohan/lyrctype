@@ -37,10 +37,10 @@ const TypePage = () => {
             <Button name={"SETTINGS"} icon={icons.settings}></Button>
             <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} name={"THEME"} icon={icons.theme}></Button>
             <Button name={"PROFILE"} icon={icons.profile}></Button>
-            <Button name={"GITHUB"} className="md:block lg:hidden" icon={icons.github} ></Button>
+            <Button onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} name={"GITHUB"} className="md:block lg:hidden" icon={icons.github} ></Button>
           </section>
           {/* <div className="size-full" ></div> */}
-          <Button className="relative w-1/4 shrink-0 h-full md:hidden lg:block" name={"GITHUB"} icon={icons.github} ></Button>
+          <Button onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} className="relative w-1/4 shrink-0 h-full md:hidden lg:block" name={"GITHUB"} icon={icons.github} ></Button>
         </section>
       </section>
       <SidebarContainer />
