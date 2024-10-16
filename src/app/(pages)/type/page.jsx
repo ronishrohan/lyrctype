@@ -5,17 +5,36 @@ import Button from "@/app/components/Button/Button";
 import { icons } from "@/util/icons";
 import { useAtom } from "jotai";
 import { currentTheme as currentThemeAtom } from "@/store/themeStore";
-import { motion, useForceUpdate, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useForceUpdate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
 const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] });
 
 const TypePage = () => {
   const [theme, setTheme] = useAtom(currentThemeAtom);
+  const textFieldRef = useRef();
+
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <div className="size-full flex px-4 pb-4 gap-4">
       <section className="size-full flex flex-col gap-2">
-        <TypingArea></TypingArea>
+        <div className="size-full flex items-center justify-center relative">
+          
+            <motion.div style={{fontVariationSettings: '"wdth" 25'}} initial={{backdropFilter: "blur(0px)", opacity: 1}} animate={{backdropFilter: isFocused ? "blur(0px)" : "blur(10px)", opacity: isFocused ? 0 : 1}} className="pointer-events-none absolute z-20 size-full backdrop-blur-md rounded-md font-syne flex items-center justify-center text-grey_surface font-black text-2xl border-2 border-border">
+              CLICK HERE TO FOCUS
+            </motion.div>
+          
+          <TypingArea
+            textField={textFieldRef}
+            handleFocus={setIsFocused}
+          ></TypingArea>
+        </div>
         <section
           style={{ fontVariationSettings: '"wdth" 250, "grad" 120, "opsz" 95' }}
           className={`flex gap-4 font-roboto font-semibold text-grey_surface hover:*:text-primary h-fit shrink-0`}
@@ -40,7 +59,7 @@ const TypePage = () => {
             <Button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               name={"THEME"}
-              icon={icons.theme}
+              icon={theme == "dark" ? icons.theme_light : icons.theme_dark}
             ></Button>
             <Button name={"PROFILE"} icon={icons.profile}></Button>
             <Button
@@ -72,38 +91,50 @@ const TogglabbleButton = ({ children }) => {
   return <motion.button>{children.toString()}</motion.button>;
 };
 
-const TypingArea = () => {
+const TypingArea = ({ textFieldRef, handleFocus }) => {
   const [content, setContent] = useState("");
   const contentRef = useRef();
   const caretRef = useRef();
   const fieldRef = useRef();
-  const caretX = useSpring(0, {damping: 40, stiffness: 400, velocity: 500});
-  const caretY = useSpring(0, {damping: 30, stiffness: 400})
+  const caretX = useSpring(0, { damping: 40, stiffness: 400 });
+  const caretY = useSpring(0, { damping: 30, stiffness: 400 });
+
+  const lyrics =
+    "i was proven effective by clinical tests for livin many lives dyin identical deaths i thought why how could this have ever been if im blessed then i had a talk with god that was interviewesque he said riq as near as the west and far as the east theres a warrant for your arrest by the karma police the dharma was deep i thought it was too dark to defeat but made it here to tell the story by the chalk of my teeth im a survivor a thriver a husband and a father i rise with every morning and star in another saga ";
 
   function handleContentUpdate(e) {
     setContent(e.target.value);
-    
   }
 
   useEffect(() => {
+    textFieldRef = contentRef;
     const bounds = caretRef.current.getBoundingClientRect();
     const fieldBounds = fieldRef.current.getBoundingClientRect();
-    caretX.set(bounds.left - fieldBounds.left -10 );
+    caretX.set(bounds.left - fieldBounds.left - 10);
     caretY.set(bounds.top - fieldBounds.top - 10);
-  }, [content])
+  }, [content]);
 
   return (
     <div
-      ref = {fieldRef}
+      ref={fieldRef}
       onClick={() => contentRef.current.focus()}
-      className="relative shrink-0 overflow-hidden flex h-96 w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface"
+      className="relative shrink-0 cursor-text overflow-hidden flex h-96 w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface"
     >
-      <pre className="text-wrap whitespace-pre-wrap inline">
+      <pre className="text-wrap whitespace-pre-wrap inline text-primary z-20">
         {content}{" "}
-        <div ref={caretRef} className="inline-block absolute align-middle opacity-0 bg-white w-1 h-8 -translate-x-4"></div>
+        <div
+          ref={caretRef}
+          className="inline-block absolute align-middle opacity-0 bg-white w-1 h-8 -translate-x-4"
+        ></div>
       </pre>
-      <motion.div style={{x: caretX, y: caretY}} className=" absolute animate-pulse bg-primary h-8 w-1 -translate-x-4 align-middle "></motion.div>
+      <div className="absolute z-10 select-none">{lyrics}</div>
+      <motion.div
+        style={{ x: caretX, y: caretY }}
+        className=" absolute animate-pulse bg-primary h-8 w-1 -translate-x-4 align-middle "
+      ></motion.div>
       <textarea
+        onFocus={() => handleFocus(true)}
+        onBlur={() => handleFocus(false)}
         onChange={handleContentUpdate}
         name="content"
         ref={contentRef}
