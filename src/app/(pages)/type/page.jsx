@@ -26,9 +26,9 @@ const page = () => {
           <TogglabbleButton>PUNCTUATION</TogglabbleButton>
           <TogglabbleButton>CASE</TogglabbleButton>
           <TogglabbleButton>SHOW</TogglabbleButton>
-          <button className="ml-auto border-2 border-primary_tint rounded-md flex p-1 px-2 hover:border-primary gap-6 fill-grey_surface hover:fill-primary hover:bg-primary_tint">
+          <button className="overflow-hidden ml-auto h-8 items-center border-2 border-primary_tint gap-6 rounded-md flex p-1 px-2 hover:border-primary fill-grey_surface hover:fill-primary hover:bg-primary_tint">
             <div className="md:hidden lg:block">RANDOM</div>
-            <div className="h-full aspect-square ">{icons.random}</div>
+            <div className="size-4">{icons.random}</div>
           </button>
         </section>
         <section className="flex gap-2 size-full relative">
