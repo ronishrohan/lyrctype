@@ -12,7 +12,7 @@ module.exports = {
       },
       fontFamily: {
         "mono": ["Xanh Mono", "monospace"],
-        "roboto": ["Roboto Flex", "sans-serif"],
+        "roboto": ["RobotoFlex", "sans-serif"],
         "syne" : ["Syne", "sans-serif"]
       },
       colors: {

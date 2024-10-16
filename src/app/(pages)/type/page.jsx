@@ -1,8 +1,10 @@
 import React from "react";
-import { Syne } from "next/font/google";
+import { Roboto_Flex, Syne } from "next/font/google";
 import Button from "@/app/components/Button/Button";
+import {icons} from "@/util/icons";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
+const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] }); 
 
 const page = () => {
   return (
@@ -10,22 +12,27 @@ const page = () => {
       <section className="size-full flex flex-col gap-2">
         <TypingArea></TypingArea>
         <section
-          style={{ fontVariationSettings: '"wdth" 150, "grad" 120, "opsz" 95' }}
+          style={{ fontVariationSettings: '"wdth" 250, "grad" 120, "opsz" 95' }}
           className={`flex gap-4 font-roboto font-semibold text-grey_surface hover:*:text-primary h-fit shrink-0`}
         >
           <TogglabbleButton>15 SECONDS</TogglabbleButton>
           <TogglabbleButton>PUNCTUATION</TogglabbleButton>
           <TogglabbleButton>CASE</TogglabbleButton>
           <TogglabbleButton>SHOW</TogglabbleButton>
+          <button className="ml-auto border-2 border-primary_tint rounded-md flex p-1 px-2 hover:border-primary gap-6 fill-grey_surface hover:fill-primary hover:bg-primary_tint">
+            RANDOM
+            <div className="h-full aspect-square ">{icons.random}</div>
+          </button>
         </section>
-        <section className="flex gap-2 size-full">
-          <section className="h-32 flex gap-2 w-full *:h-full *:w-full hover:*:w-[150%] *:transition-all *:ease-circOut *:duration-500">
-            <Button className=""></Button>
-            <Button className=""></Button>
-            <Button className=""></Button>
-            <Button className=""></Button>
+        <section className="flex gap-2 size-full relative">
+          <section className="h-32 flex gap-2 w-full  *:h-full *:w-full hover:*:w-[120%] *:transition-all *:ease-circOut *:duration-500">
+            <Button name={"LEADERBOARD"} icon={icons.leaderboard}></Button>
+            <Button name={"SETTINGS"} icon={icons.settings}></Button>
+            <Button name={"THEME"} icon={icons.theme}></Button>
+            <Button name={"PROFILE"} icon={icons.profile}></Button>
           </section>
-          <Button className="h-full aspect-square shrink-0" ></Button>
+          {/* <div className="size-full" ></div> */}
+          <Button className="relative w-1/4 shrink-0 h-full" name={"GITHUB"} icon={icons.github} ></Button>
         </section>
       </section>
       <SidebarContainer />
@@ -79,17 +86,17 @@ const SidebarContainer = () => {
             </div>
           </div>
           <section
-            className={`mt-2 w-full h-fit flex flex-col gap-2 text-2xl leading-4 shrink-0 ${syne.className}`}
+            className={`mt-2 w-full h-fit flex flex-col gap-2 text-2xl leading-4 shrink ${syne.className}`}
           >
             <div className="font-semibold">Identical Deaths</div>
             <div className="font-semibold text-xl text-grey_surface">
               Danger Mouse, Black Thought
             </div>
           </section>
-          <section className="w-full h-fit">
+          <section className="w-full h-fit shrink">
             <div
-              style={{ fontVariationSettings: '"wdth" 25' }}
-              className="text-9xl text-primary font-bold font-roboto flex justify-between"
+              style={{ fontVariationSettings: '"wdth" 80, "grad" 120, "opsz" 250' }}
+              className="text-8xl text-primary font-roboto font-bold flex justify-between"
             >
               <div>124</div>
               <div>98%</div>

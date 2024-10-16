@@ -1,5 +1,5 @@
 import "./index.css";
-import "@fontsource-variable/roboto-flex";
+
 import "@fontsource/syne";
 import "@fontsource/xanh-mono";
 

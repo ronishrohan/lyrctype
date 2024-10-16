@@ -1,6 +1,12 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "RobotoFlex";
+  src: url("../../public/fonts/roboto.ttf") format("truetype");
+}
 
 
 .dark{
