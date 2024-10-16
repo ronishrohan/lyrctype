@@ -1,20 +1,17 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import { Roboto_Flex, Syne } from "next/font/google";
 import Button from "@/app/components/Button/Button";
-import {icons} from "@/util/icons";
+import { icons } from "@/util/icons";
 import { useAtom } from "jotai";
-import { currentTheme as currentThemeAtom} from "@/store/themeStore";
-import {motion} from "framer-motion";
+import { currentTheme as currentThemeAtom } from "@/store/themeStore";
+import { motion, useForceUpdate, useMotionValue, useSpring } from "framer-motion";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
-const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] }); 
-
-
-
+const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] });
 
 const TypePage = () => {
-  const [theme, setTheme] = useAtom(currentThemeAtom)
+  const [theme, setTheme] = useAtom(currentThemeAtom);
   return (
     <div className="size-full flex px-4 pb-4 gap-4">
       <section className="size-full flex flex-col gap-2">
@@ -34,14 +31,36 @@ const TypePage = () => {
         </section>
         <section className="flex gap-2 size-full relative">
           <section className="max-h-32 flex gap-2 w-full  *:h-full *:w-full hover:*:w-[120%] *:transition-all *:ease-circOut *:duration-500">
-            <Button onClick={() => {}} name={"LEADERBOARD"} icon={icons.leaderboard}></Button>
+            <Button
+              onClick={() => {}}
+              name={"LEADERBOARD"}
+              icon={icons.leaderboard}
+            ></Button>
             <Button name={"SETTINGS"} icon={icons.settings}></Button>
-            <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} name={"THEME"} icon={icons.theme}></Button>
+            <Button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              name={"THEME"}
+              icon={icons.theme}
+            ></Button>
             <Button name={"PROFILE"} icon={icons.profile}></Button>
-            <Button onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} name={"GITHUB"} className="md:block lg:hidden" icon={icons.github} ></Button>
+            <Button
+              onClick={() =>
+                window.open("https://github.com/ronishrohan/lyrctype", "_blank")
+              }
+              name={"GITHUB"}
+              className="md:block lg:hidden"
+              icon={icons.github}
+            ></Button>
           </section>
           {/* <div className="size-full" ></div> */}
-          <Button  onClick={() => window.open("https://github.com/ronishrohan/lyrctype", "_blank")} className="relative w-1/4 shrink-0 h-full md:hidden lg:block" name={"GITHUB"} icon={icons.github} ></Button>
+          <Button
+            onClick={() =>
+              window.open("https://github.com/ronishrohan/lyrctype", "_blank")
+            }
+            className="relative w-1/4 shrink-0 h-full md:hidden lg:block"
+            name={"GITHUB"}
+            icon={icons.github}
+          ></Button>
         </section>
       </section>
       <SidebarContainer />
@@ -54,24 +73,45 @@ const TogglabbleButton = ({ children }) => {
 };
 
 const TypingArea = () => {
+  const [content, setContent] = useState("");
+  const contentRef = useRef();
+  const caretRef = useRef();
+  const fieldRef = useRef();
+  const caretX = useSpring(0, {damping: 40, stiffness: 400, velocity: 500});
+  const caretY = useSpring(0, {damping: 30, stiffness: 400})
+
+  function handleContentUpdate(e) {
+    setContent(e.target.value);
+    
+  }
+
+  useEffect(() => {
+    const bounds = caretRef.current.getBoundingClientRect();
+    const fieldBounds = fieldRef.current.getBoundingClientRect();
+    caretX.set(bounds.left - fieldBounds.left -10 );
+    caretY.set(bounds.top - fieldBounds.top - 10);
+  }, [content])
+
   return (
-    <section className="relative shrink-0 overflow-hidden flex justify-center h-96 w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface">
-      i was proven effective by clinical tests for livin many lives dyin
-      identical deaths i thought why how could this have ever been if im blessed
-      then i had a talk with god that was interviewesque he said riq as near as
-      the west and far as the east theres a warrant for your arrest by the karma
-      police the dharma was deep i thought it was too dark to defeat but made it
-      here to tell the story by the chalk of my teeth im a survivor a thriver a
-      husband and a father i rise with every morning and star in another saga i
-      was proven effective by clinical tests for livin many lives dyin identical
-      deaths i thought why how could this have ever been if im blessed then i
-      had a talk with god that was interviewesque he said riq as near as the
-      west and far as the east theres a warrant for your arrest by the karma
-      police the dharma was deep i thought it was too dark to defeat but made it
-      here to tell the story by the chalk of my teeth im a survivor a thriver a
-      husband and a father i rise with every morning and star in another saga
-      <div className="absolute -bottom-10 h-36  w-[98%] rounded-t-full bg-background_darker blur-md"></div>
-    </section>
+    <div
+      ref = {fieldRef}
+      onClick={() => contentRef.current.focus()}
+      className="relative shrink-0 overflow-hidden flex h-96 w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface"
+    >
+      <pre className="text-wrap whitespace-pre-wrap inline">
+        {content}{" "}
+        <div ref={caretRef} className="inline-block absolute align-middle opacity-0 bg-white w-1 h-8 -translate-x-4"></div>
+      </pre>
+      <motion.div style={{x: caretX, y: caretY}} className=" absolute animate-pulse bg-primary h-8 w-1 -translate-x-4 align-middle "></motion.div>
+      <textarea
+        onChange={handleContentUpdate}
+        name="content"
+        ref={contentRef}
+        id=""
+        className="opacity-0 fixed pointer-events-none"
+      ></textarea>
+      {/* <div className="absolute -bottom-10 h-36  w-[98%] rounded-t-full bg-background_darker blur-md"></div> */}
+    </div>
   );
 };
 
@@ -104,7 +144,9 @@ const SidebarContainer = () => {
           </section>
           <section className="w-full h-fit shrink">
             <div
-              style={{ fontVariationSettings: '"wdth" 40, "grad" 120, "opsz" 250' }}
+              style={{
+                fontVariationSettings: '"wdth" 40, "grad" 120, "opsz" 250',
+              }}
               className="text-[16vh] leading-[16vh] text-primary font-roboto font-bold flex justify-between"
             >
               <div>124</div>

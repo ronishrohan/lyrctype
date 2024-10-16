@@ -1,13 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Syne } from "next/font/google";
 import Button from "../Button/Button";
 import { icons } from "@/util/icons";
 import Link from "next/link";
+import { useSearchToolbar } from "@/store/SearchToolbar/Search.provider";
 
 const syne = Syne({ subsets: ["latin"], weight: "variable" });
 
 const Navbar = () => {
+  const {setEnabled} = useSearchToolbar();
+  useEffect(() => {
+    function handleOpenSearch(e){
+      
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault();
+        setEnabled(true);
+      }
+      else{
+        return;
+      }
+    }
+    document.addEventListener("keydown", handleOpenSearch);
+    return () => document.removeEventListener("keydown", handleOpenSearch);
+  })
   return (
     <header className="h-[80px] sticky p-4  flex bg-background items-center">
       <Link

@@ -59,7 +59,7 @@ const Button = ({ onClick, size, name, title, icon,children, ...others }) => {
               style={{x: mouse[0], y: mouse[1]}}
               initial={{ scale: 0, opacity: 0.5 }}
               animate={{ scale: 2, opacity: 0 }}
-              transition={{ duration: 0.5, ease: "circOut" }}
+              transition={{ duration: 0.5, ease: "circOut", opacity: {duration: 0.7, ease: "linear"} }}
               className="rounded-[50%] z-0 absolute w-full  aspect-square blur-2xl bg-primary "
             ></motion.div>
           );

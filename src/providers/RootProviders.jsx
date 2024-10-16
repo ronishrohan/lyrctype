@@ -1,10 +1,13 @@
-import { Provider } from 'jotai'
-import React from 'react'
+import { Provider } from "jotai";
+import React from "react";
+import { SearchToolbarProvider } from "@/store/SearchToolbar/Search.provider";
 
-const RootProviders = ({children}) => {
+const RootProviders = ({ children }) => {
   return (
-    <Provider>{children}</Provider>
-  )
-}
+    <Provider>
+      <SearchToolbarProvider>{children}</SearchToolbarProvider>
+    </Provider>
+  );
+};
 
-export default RootProviders
+export default RootProviders;
