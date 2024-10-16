@@ -12,7 +12,7 @@ const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] });
 
 
 
-const page = () => {
+const TypePage = () => {
   const [theme, setTheme] = useAtom(currentThemeAtom)
   return (
     <div className="size-full flex px-4 pb-4 gap-4">
@@ -122,4 +122,4 @@ const SidebarContainer = () => {
   );
 };
 
-export default page;
+export default TypePage;
