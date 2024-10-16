@@ -20,19 +20,20 @@ const page = () => {
           <TogglabbleButton>CASE</TogglabbleButton>
           <TogglabbleButton>SHOW</TogglabbleButton>
           <button className="ml-auto border-2 border-primary_tint rounded-md flex p-1 px-2 hover:border-primary gap-6 fill-grey_surface hover:fill-primary hover:bg-primary_tint">
-            RANDOM
+            <div className="md:hidden lg:block">RANDOM</div>
             <div className="h-full aspect-square ">{icons.random}</div>
           </button>
         </section>
         <section className="flex gap-2 size-full relative">
-          <section className="h-32 flex gap-2 w-full  *:h-full *:w-full hover:*:w-[120%] *:transition-all *:ease-circOut *:duration-500">
+          <section className="max-h-32 flex gap-2 w-full  *:h-full *:w-full hover:*:w-[120%] *:transition-all *:ease-circOut *:duration-500">
             <Button name={"LEADERBOARD"} icon={icons.leaderboard}></Button>
             <Button name={"SETTINGS"} icon={icons.settings}></Button>
             <Button name={"THEME"} icon={icons.theme}></Button>
             <Button name={"PROFILE"} icon={icons.profile}></Button>
+            <Button name={"GITHUB"} className="md:block lg:hidden" icon={icons.github} ></Button>
           </section>
           {/* <div className="size-full" ></div> */}
-          <Button className="relative w-1/4 shrink-0 h-full" name={"GITHUB"} icon={icons.github} ></Button>
+          <Button className="relative w-1/4 shrink-0 h-full md:hidden lg:block" name={"GITHUB"} icon={icons.github} ></Button>
         </section>
       </section>
       <SidebarContainer />
@@ -70,8 +71,8 @@ const SidebarContainer = () => {
   return (
     <>
       <section className="h-full w-96 shrink-0 min-h-0 flex flex-col">
-        <div className="flex flex-col gap-2 h-full">
-          <div className="flex flex-col shrink  h-96 gap-1">
+        <div className="flex flex-col  h-full">
+          <div className="flex flex-col shrink  lg:h-96 md:h-64 gap-1">
             <h1
               className={`${syne.className} text-primary font-semibold shrink-0`}
             >
@@ -86,7 +87,7 @@ const SidebarContainer = () => {
             </div>
           </div>
           <section
-            className={`mt-2 w-full h-fit flex flex-col gap-2 text-2xl leading-4 shrink ${syne.className}`}
+            className={`mt-4 w-full h-fit flex flex-col gap-2 text-2xl leading-4 shrink ${syne.className}`}
           >
             <div className="font-semibold">Identical Deaths</div>
             <div className="font-semibold text-xl text-grey_surface">
@@ -95,8 +96,8 @@ const SidebarContainer = () => {
           </section>
           <section className="w-full h-fit shrink">
             <div
-              style={{ fontVariationSettings: '"wdth" 80, "grad" 120, "opsz" 250' }}
-              className="text-8xl text-primary font-roboto font-bold flex justify-between"
+              style={{ fontVariationSettings: '"wdth" 40, "grad" 120, "opsz" 250' }}
+              className="text-[16vh] leading-[16vh] text-primary font-roboto font-bold flex justify-between"
             >
               <div>124</div>
               <div>98%</div>

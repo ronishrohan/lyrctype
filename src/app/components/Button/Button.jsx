@@ -1,13 +1,13 @@
 import React from "react";
 
-const Button = ({ onClick, name,title, icon, ...others }) => {
+const Button = ({ onClick,size, name,title, icon, ...others }) => {
   return (
     <div {...others} title={title}>
       <button
         onClick={onClick}
         className="relative size-full group rounded-md border-2 border-border hover:border-primary bg-background hover:bg-primary_tint flex items-center justify-center"
       >
-        <div className="h-1/3 aspect-square fill-grey_surface group-hover:fill-primary ">
+        <div className={`${size == "small" ? "h-1/2" : "h-1/3"} aspect-square fill-grey_surface group-hover:fill-primary `}>
           {icon}
         </div>
         <div
