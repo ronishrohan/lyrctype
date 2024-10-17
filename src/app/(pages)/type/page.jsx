@@ -119,6 +119,7 @@ const TypingArea = ({ textFieldRef, handleFocus }) => {
   const [wpm, setWpm] = useAtom(wpmAtom);
   const [timer, setTimer] = useState(1);
   const [start, setStart] = useState(false);
+  const [mistakes, setMistakes] = useState(0);
 
   useEffect(() => {
     let interval;
@@ -140,7 +141,19 @@ const TypingArea = ({ textFieldRef, handleFocus }) => {
     
   }, [content])
   useEffect(() => {
-    setWpm(Math.round((content.length/4)*60/(timer/1000)))
+
+    if(wpm < 0){
+      return
+    }
+    
+    if(timer/1000 > 5){
+      setStart(false)
+      
+    }
+    else{
+      setWpm(Math.round((content.length/4 - mistakes/10)*60/(timer/1000)))
+    }
+    
   }, [timer])
   function handleContentUpdate(e) {
     const tempContent = e.target.value;
@@ -191,7 +204,7 @@ const TypingArea = ({ textFieldRef, handleFocus }) => {
           final += letter[0];
         }
         else{
-          
+          setMistakes(prev => prev + 1)
           if(start == -1){
             final += '<span className="text-warning z-10 relative">'
             final += letter[0];
