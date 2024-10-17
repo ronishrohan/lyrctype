@@ -32,7 +32,7 @@ const Navbar = () => {
       >
         LYRC
       </Link>
-      <div className="flex gap-2 ml-auto h-full w-96">
+      <div className="flex gap-2 ml-auto h-full w-[50vh] min-w-96">
         <SearchBar></SearchBar>
         <Button
           title="Your profile"

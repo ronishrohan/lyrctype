@@ -1,16 +1,18 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Roboto_Flex, Syne } from "next/font/google";
 import Button from "@/app/components/Button/Button";
 import { icons } from "@/util/icons";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { currentTheme as currentThemeAtom } from "@/store/themeStore";
 import {
+  AnimatePresence,
   motion,
-  useForceUpdate,
-  useMotionValue,
   useSpring,
 } from "framer-motion";
+
+import parse from "html-react-parser"
+import { accuracyAtom, wpmAtom } from "@/store/typeStore";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
 const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] });
@@ -21,15 +23,25 @@ const TypePage = () => {
 
   const [isFocused, setIsFocused] = useState(false);
 
+
   return (
     <div className="size-full flex px-4 pb-4 gap-4">
       <section className="size-full flex flex-col gap-2">
         <div className="size-full flex items-center justify-center relative">
-          
-            <motion.div style={{fontVariationSettings: '"wdth" 25'}} initial={{backdropFilter: "blur(0px)", opacity: 1}} animate={{backdropFilter: isFocused ? "blur(0px)" : "blur(10px)", opacity: isFocused ? 0 : 1}} className="pointer-events-none absolute z-20 size-full backdrop-blur-md rounded-md font-syne flex items-center justify-center text-grey_surface font-black text-2xl border-2 border-border">
+          <AnimatePresence>
+            <motion.div
+              style={{ fontVariationSettings: '"wdth" 25' }}
+              initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
+              animate={{
+                backdropFilter: isFocused ? "blur(0px)" : "blur(10px)",
+                opacity: isFocused ? 0 : 1,
+              }}
+              className="pointer-events-none absolute z-30 size-full backdrop-blur-md rounded-md font-syne flex items-center justify-center text-grey_surface font-black text-2xl border-2 border-border"
+            >
               CLICK HERE TO FOCUS
             </motion.div>
-          
+          </AnimatePresence>
+
           <TypingArea
             textField={textFieldRef}
             handleFocus={setIsFocused}
@@ -102,26 +114,132 @@ const TypingArea = ({ textFieldRef, handleFocus }) => {
   const lyrics =
     "i was proven effective by clinical tests for livin many lives dyin identical deaths i thought why how could this have ever been if im blessed then i had a talk with god that was interviewesque he said riq as near as the west and far as the east theres a warrant for your arrest by the karma police the dharma was deep i thought it was too dark to defeat but made it here to tell the story by the chalk of my teeth im a survivor a thriver a husband and a father i rise with every morning and star in another saga ";
 
-  function handleContentUpdate(e) {
-    setContent(e.target.value);
-  }
+  const [lyricsEntered, setLyricsEntered] = useState([[]]);
+  const [finalLyrics, setFinalLyrics] = useState("");
+  const [wpm, setWpm] = useAtom(wpmAtom);
+  const [timer, setTimer] = useState(1);
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
+    let interval;
+    if (start) {
+      interval = setInterval(() => {
+        setTimer(prev => prev + 100);
+      }, 100);
+    }
+
+    
+    return () => clearInterval(interval);
+  }, [start]);
+
+  useEffect(() => {
+    if(content.length > 0){
+      setStart(true)
+    }
+    
+    
+  }, [content])
+  useEffect(() => {
+    setWpm(Math.round((content.length/4)*60/(timer/1000)))
+  }, [timer])
+  function handleContentUpdate(e) {
+    const tempContent = e.target.value;
+    
+    
+    if(lyrics[e.target.value.length-1] == " "){
+      // console.log(lyrics[e.target.value.length-1],e.target.value[e.target.value.length-1])
+      if(lyrics[e.target.value.length-1] != e.target.value[e.target.value.length-1]){
+        contentRef.current.value = tempContent.slice(0, -1);
+        return
+      }
+    }
+    // console.log(lyrics[tempContent.length])
+
+    setContent(e.target.value);
+   
+    const temp = [[]]
+    tempContent.split("").forEach((letter, index) => {
+      if(lyrics[index] == letter){
+        temp[index] = [letter, true]
+      }
+      else{
+        temp[index] = [lyrics[index], false]
+      }
+    })
+    
+
+    let final = "";
+    let start=-1;
+    
+    if(lyrics[finalLyrics.length] == " "){
+      // console.log(true)
+    }
+
+    if(e.target.value.length > 0){
+      temp.forEach((letter, index) => {
+        // console.log(lyrics[final.length])
+        
+
+        if (letter[1]) {
+          if(start != -1){
+            
+            
+            final+="</span>"
+            start = -1;
+          }
+  
+          final += letter[0];
+        }
+        else{
+          
+          if(start == -1){
+            final += '<span className="text-warning z-10 relative">'
+            final += letter[0];
+          }
+          else{
+            final += letter[0];
+          }
+          start = index;
+          
+        }
+
+        
+      })
+    }
+
+    
+    
+    setFinalLyrics(final);
+    // setLyricsEntered(temp);
+    
+  }
+
+ 
+
+  useLayoutEffect(() => {
+    
+    
+    contentRef.current.focus();
     textFieldRef = contentRef;
+    
     const bounds = caretRef.current.getBoundingClientRect();
     const fieldBounds = fieldRef.current.getBoundingClientRect();
-    caretX.set(bounds.left - fieldBounds.left - 10);
+    caretX.set(bounds.left - fieldBounds.left + 5);
     caretY.set(bounds.top - fieldBounds.top - 10);
   }, [content]);
+
+  // useEffect(() => {
+  //   console.log(lyricsEntered)
+  // }, [lyricsEntered])
 
   return (
     <div
       ref={fieldRef}
       onClick={() => contentRef.current.focus()}
-      className="relative shrink-0 cursor-text overflow-hidden flex h-96 w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface"
+      className="relative shrink-0 cursor-text overflow-hidden flex min-h-96 h-[50vh] w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface"
     >
       <pre className="text-wrap whitespace-pre-wrap inline text-primary z-20">
-        {content}{" "}
+        {parse(finalLyrics)}
         <div
           ref={caretRef}
           className="inline-block absolute align-middle opacity-0 bg-white w-1 h-8 -translate-x-4"
@@ -130,7 +248,7 @@ const TypingArea = ({ textFieldRef, handleFocus }) => {
       <div className="absolute z-10 select-none">{lyrics}</div>
       <motion.div
         style={{ x: caretX, y: caretY }}
-        className=" absolute animate-pulse bg-primary h-8 w-1 -translate-x-4 align-middle "
+        className=" absolute animate-pulse bg-primary h-8 w-1 -translate-x-4 align-middle shadow-green-400 shadow-md z-20"
       ></motion.div>
       <textarea
         onFocus={() => handleFocus(true)}
@@ -147,11 +265,15 @@ const TypingArea = ({ textFieldRef, handleFocus }) => {
 };
 
 const SidebarContainer = () => {
+
+  const wpm = useAtomValue(wpmAtom);
+  const accuracy = useAtomValue(accuracyAtom);
+
   return (
     <>
-      <section className="h-full w-96 shrink-0 min-h-0 flex flex-col">
+      <section className="h-full w-[50vh] min-w-96 shrink-0 min-h-0 flex flex-col">
         <div className="flex flex-col  h-full">
-          <div className="flex flex-col shrink  lg:h-96 md:h-64 gap-1">
+          <div className="flex flex-col shrink  lg:min-h-96 lg:h-[50vh] md:h-64 gap-1">
             <h1
               className={`${syne.className} text-primary font-semibold shrink-0`}
             >
@@ -180,8 +302,8 @@ const SidebarContainer = () => {
               }}
               className="text-[16vh] leading-[16vh] text-primary font-roboto font-bold flex justify-between"
             >
-              <div>124</div>
-              <div>98%</div>
+              <div>{wpm}</div>
+              <div>{accuracy}%</div>
             </div>
           </section>
           <button

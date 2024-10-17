@@ -16,10 +16,10 @@ const HomePage = () => {
       <div className="font-syne font-bold text-9xl inline">LYRCTYPE</div>
       <div
         style={{ fontVariationSettings: '"wdth" 25' }}
-        className="font-roboto font-semibold lg:text-8xl md:text-4xl inline"
+        className="font-roboto font-semibold lg:text-8xl md:text-6xl inline"
       >
         A website to improve your typing skills while listening to music. <br />
-        it's useless.
+        yes. it's useless.
       </div>
       <Button onClick={handleOpenToolbar} className="size-fit mt-auto">
         <div className="size-full flex items-center justify-between p-4 text-primary fill-primary">
