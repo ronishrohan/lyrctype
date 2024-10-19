@@ -23,6 +23,19 @@ class Genius {
     return lyrics
   }
 
+  static calculateAvgWordLength(lyrics){
+    const words = lyrics.split(" ")
+    let total = 0
+    for(let i = 0; i < words.length; i++){
+      total += words[i].length
+    }
+    return total/words.length
+  }
+
+  static countWords(lyrics){
+    return lyrics.split(" ").length
+  }
+
   static async getSongDetails(id){
     const res = await genius.get('/songs/'+id)
     const song = res.data.response.song

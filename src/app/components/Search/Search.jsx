@@ -5,10 +5,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useSearchToolbar } from "@/store/SearchToolbar/Search.provider";
-import { genius } from "@/util/geniusAxios";
-import axios from "axios";
 import Genius from "@/util/genius/genius";
 import Image from "next/image";
+
 
 const syne = Syne({ subsets: ["latin"], weight: "variable" });
 
@@ -68,7 +67,9 @@ const SearchResult = ({song}) => {
   const { setEnabled } = useSearchToolbar();
   const router = useRouter();
   function handleRedirect() {
+    
     router.push(`/type?id=${song.result.id}`);
+
     setEnabled(false);
   }
   return (

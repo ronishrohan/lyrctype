@@ -1,17 +1,20 @@
-import React from 'react'
-import TypePage from './clientPage'
-import Genius from '@/util/genius/genius'
+import React, { Suspense } from "react";
+import ServerTypePage from "./serverPage";
 
-
-const MainTypePage =  async ({searchParams }) => {
+const RootTypePage = ({  searchParams,children }) => {
   
-
-  const data = await Genius.getSongDetails(searchParams.id)
-  
-
   return (
-    <TypePage songData={data} ></TypePage>
-  )
-}
+    <Suspense
+      key={searchParams.id}
+      fallback={
+        <div className="size-full flex items-center justify-center font-roboto font-bold text-7xl text-primary">
+          LOADING
+        </div>
+      }
+    >
+      <ServerTypePage id={searchParams.id}>{children}</ServerTypePage>
+    </Suspense>
+  );
+};
 
-export default MainTypePage
+export default RootTypePage;

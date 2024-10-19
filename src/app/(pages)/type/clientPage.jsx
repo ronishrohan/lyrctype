@@ -14,6 +14,10 @@ import {
 import parse from "html-react-parser"
 import { accuracyAtom, wpmAtom } from "@/store/typeStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Genius from "@/util/genius/genius";
+
+import YouTube from "react-youtube";
 
 const syne = Syne({ weight: "variable", subsets: ["latin"] });
 const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] });
@@ -21,15 +25,21 @@ const roboto = Roboto_Flex({ weight: "600", subsets: ["latin"] });
 const TypePage = ({songData}) => {
   const [theme, setTheme] = useAtom(currentThemeAtom);
   const textFieldRef = useRef();
+  const router=useRouter();
+  const ytPlayer = useRef();
+  
 
   const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
-    console.log(songData)
+    console.log(songData, songData.media[0].url.slice(-11))
+    
+    
   })
 
   return (
     <div className="size-full flex px-4 pb-4 gap-4">
+      <YouTube className="fixed opacity-0" videoId={songData.media[0].url.slice(-11)} ref={ytPlayer} onReady={e => e.target.playVideo()}></YouTube>
       <section className="size-full flex flex-col gap-2">
         <div className="size-full flex items-center justify-center relative">
           <AnimatePresence>
@@ -121,9 +131,10 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
   const [lyricsEntered, setLyricsEntered] = useState([[]]);
   const [finalLyrics, setFinalLyrics] = useState("");
   const [wpm, setWpm] = useAtom(wpmAtom);
+  const [accuracy, setAccuracy] = useAtom(accuracyAtom);
   const [timer, setTimer] = useState(1);
   const [start, setStart] = useState(false);
-  const [mistakes, setMistakes] = useState(0);
+  const [mistakes, setMistakes] = useState([]);
 
   useEffect(() => {
     let interval;
@@ -155,10 +166,17 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
       
     }
     else{
-      setWpm(Math.round((content.length/4 - mistakes/10)*60/(timer/1000)))
+      const wpmCalc = Math.round((content.length/Genius.calculateAvgWordLength(lyrics) - mistakes.length/25)*60/(timer/1000));
+      setWpm(wpmCalc)
+      // console.log(mistakes)
+      
+      setAccuracy(Math.round((content.length - mistakes.length)/content.length*100))
+      
     }
     
   }, [timer])
+
+
   function handleContentUpdate(e) {
     const tempContent = e.target.value;
     
@@ -192,7 +210,8 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
       // console.log(true)
     }
 
-    if(e.target.value.length > 0){
+
+    function errorParser(){
       temp.forEach((letter, index) => {
         // console.log(lyrics[final.length])
         
@@ -208,7 +227,16 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
           final += letter[0];
         }
         else{
-          setMistakes(prev => prev + 1)
+
+          setMistakes(prev => {
+            if(!prev.includes(index)){
+              return prev.concat(index)
+            }
+            else{
+              return prev
+            }
+          })
+
           if(start == -1){
             final += '<span className="text-warning z-10 relative">'
             final += letter[0];
@@ -224,6 +252,10 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
       })
     }
 
+    if(e.target.value.length > 0){
+      errorParser();
+    }
+
     
     
     setFinalLyrics(final);
@@ -231,19 +263,29 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
     
   }
 
- 
+  function handleCaret() {
+    const bounds = caretRef.current.getBoundingClientRect();
+    const fieldBounds = fieldRef.current.getBoundingClientRect();
+    caretX.set(bounds.left - fieldBounds.left + 5);
+    caretY.set(bounds.top - fieldBounds.top - 10);
+  }
 
   useLayoutEffect(() => {
     
     
     contentRef.current.focus();
     textFieldRef = contentRef;
+    handleCaret();
     
-    const bounds = caretRef.current.getBoundingClientRect();
-    const fieldBounds = fieldRef.current.getBoundingClientRect();
-    caretX.set(bounds.left - fieldBounds.left + 5);
-    caretY.set(bounds.top - fieldBounds.top - 10);
   }, [content]);
+
+  useLayoutEffect(() => {
+    if(window){
+      window.addEventListener("resize", handleCaret);
+    }
+
+    return () => window.removeEventListener("resize", handleCaret);
+  })
 
   // useEffect(() => {
   //   console.log(lyricsEntered)
@@ -255,6 +297,7 @@ const TypingArea = ({ textFieldRef, handleFocus, song }) => {
       onClick={() => contentRef.current.focus()}
       className="relative shrink-0 cursor-text overflow-hidden flex min-h-96 h-[50vh] w-full bg-background_darker border-2 border-border rounded-md p-2 text-3xl font-mono text-grey_surface"
     >
+      
       <pre className="text-wrap whitespace-pre-wrap inline text-primary z-20">
         {parse(finalLyrics)}
         <div
@@ -321,8 +364,8 @@ const SidebarContainer = ({song}) => {
               }}
               className="text-[16vh] leading-[16vh] text-primary font-roboto font-bold flex justify-between"
             >
-              <div>{wpm}</div>
-              <div>{accuracy}%</div>
+              <div>{(Number.isNaN(wpm) || wpm == 0) ? "WPM" : Math.round(wpm)}</div>
+              <div>{(Number.isNaN(accuracy) || accuracy == 0) ? "ACC" : Math.round(accuracy)+"%"}</div>
             </div>
           </section>
           <button
